@@ -17,7 +17,7 @@
             overflow-x: hidden;
         }
 
-        /* Minimal scrollbar styles */
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -317,7 +317,7 @@
         <div class="container content-wrapper">
             <h2 class="display-2 mb-5 text-center fade-in">PROJECTS:</h2>
             <div class="row" id="projects-container">
-                <!-- Project placeholders will be dynamically added here -->
+
             </div>
         </div>
     </section>
@@ -337,15 +337,15 @@
             const navbar = document.querySelector('.navbar');
             let lastScrollTop = 0;
 
-            // Navbar animation
+
             window.addEventListener('scroll', function() {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 
                 if (scrollTop > lastScrollTop) {
-                    // Scrolling down
+
                     navbar.style.transform = 'translateY(-100%)';
                 } else {
-                    // Scrolling up
+
                     navbar.style.transform = 'translateY(0)';
                 }
 
@@ -360,7 +360,6 @@
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             });
 
-            // Fade-in animation
             const fadeElements = document.querySelectorAll('.fade-in');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -376,7 +375,7 @@
                 observer.observe(element);
             });
 
-            // Interactive design quote
+            // design quotes
             const quotes = [
                 "As long as it works, it's design.",
                 "The life of a designer is a life of fight against ugliness.",
@@ -400,7 +399,7 @@
                 }, 300);
             });
 
-            // Shape morph animation
+            // shape morphs
             const shapeMorph = document.querySelector('.shape-morph');
             const shapes = [
                 { borderRadius: '0%', width: '80px', height: '80px' },
@@ -420,7 +419,7 @@
                 Object.assign(shapeMorph.style, newShape);
             });
 
-            // Dynamic project loading
+            // project details
             const projectsData = [
                 { title: "Project Eclipse", description: "This project was about making a packaging which went fit with the font I created.", image: "project 1.png" },
                 { title: "Project Mystery Man", description: "A Photo Narrative about a passenger vanishing amidst the rumbles of the local train.", image: "project 2.png" },
@@ -445,7 +444,7 @@
                 observer.observe(projectElement);
             });
 
-            // Social media links
+            // social media links
             const socialLinks = {
                 instagram: 'https://www.instagram.com/max.0.you.now/',
                 linkedin: 'https://www.linkedin.com/in/shraman-roy-52220b255/',
