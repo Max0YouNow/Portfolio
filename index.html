@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>a graphic designer's portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Roboto Mono', monospace;
+            color: #fff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Minimal scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 50px 0;
+        }
+
+        h1, h2 {
+            font-family: 'Jersey 10', sans-serif;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: -1;
+        }
+
+        .project-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .navbar {
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            padding: 20px 0;
+        }
+
+        .navbar-brand {
+            font-family: 'Jersey 10', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #fff;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: translateX(0);
+        }
+
+        .background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        .project-container {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-container:hover {
+            transform: scale(1.05);
+        }
+
+        .project-description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(100%);
+        }
+
+        .project-container:hover .project-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            font-size: 24px;
+            color: white;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #fff;
+            transform: scale(1.2);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .section-divider {
+            width: 100%;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 20px 0;
+        }
+
+        .content-wrapper {
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .interactive-element {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.1);
+        }
+
+        #designQuote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #designQuote:hover {
+            transform: scale(1.05);
+        }
+
+        .shape-morph {
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            margin: 30px auto 0;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        #interactiveElements {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        footer {
+            background-color: transparent !important;
+            padding: 10px 0;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        footer:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">less reading, more seeing</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="overlay"></div>
+
+    <video autoplay muted loop id="myVideo" class="background-video">
+        <source src="videoplayback (1).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <section id="home" class="section">
+        <div class="container text-center content-wrapper">
+            <h1 class="display-1 mb-4 float-animation">A GRAPHIC DESIGNER'S PORTFOLIO</h1>
+            <p class="lead fade-in">Hi! I'm a pursuing graphic designer at Atlas Skilltech Uni (ISDI).<br>I'm currently in my 2nd year and I made this for anyone to check out my journey through my projects.</p>
+            <a href="#about" class="btn btn-outline-light btn-lg mt-3 fade-in">About Me</a>
+            <a href="#projects" class="btn btn-outline-light btn-lg mt-3 ms-3 fade-in">Projects</a>
+            <div id="interactiveElements">
+                <div id="designQuote" class="mt-4 fade-in">
+                    Interact with me for wisdom.
+                </div>
+                <div class="shape-morph mt-4 fade-in"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="about" class="section">
+        <div class="container content-wrapper">
+            <h2 class="display-2 mb-4 text-center fade-in">GET TO KNOW ME:</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <p class="lead fade-in">
+                        As a passionate graphic designer in my 2nd year at Atlas Skilltech University (ISDI), I'm on a journey to explore and create in the world of design. My work spans various projects, reflecting my growth and creativity. Beyond design, I'm an avid gamer, car enthusiast, photographer, and drummer, drawing inspiration from global music and diverse experiences.
+                    </p>
+                    <div class="social-icons text-center mt-4 fade-in">
+                        <a href="#" target="_blank" id="instagram-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank" id="linkedin-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank" id="behance-link"><i class="fab fa-behance"></i></a>
+                        <a href="#" target="_blank" id="youtube-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="projects" class="section">
+        <div class="container content-wrapper">
+            <h2 class="display-2 mb-5 text-center fade-in">PROJECTS:</h2>
+            <div class="row" id="projects-container">
+                <!-- Project placeholders will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-2">
+        <p class="mb-0">&copy; 2024 Shraman Roy</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit-code.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+                target: '#navbarNav'
+            });
+
+            const navbar = document.querySelector('.navbar');
+            let lastScrollTop = 0;
+
+            // Navbar animation
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop) {
+                    // Scrolling down
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    // Scrolling up
+                    navbar.style.transform = 'translateY(0)';
+                }
+
+                if (scrollTop > 50) {
+                    navbar.style.padding = '10px 0';
+                    navbar.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                } else {
+                    navbar.style.padding = '20px 0';
+                    navbar.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                }
+
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            });
+
+            // Fade-in animation
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Interactive design quote
+            const quotes = [
+                "As long as it works, it's design.",
+                "The life of a designer is a life of fight against ugliness.",
+                "Good design is as little design as possible.",
+                "The ultimate inspiration is the deadline.",
+                "I care. Therefore, I Kern.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Memorise it.",
+                "Clients are not supposed to have ideas, they have problems.",
+                "Keep Calm and avoid Comic Sans!",
+                "In the event of a typographic designer block, drop the Helvetica BOLD. ",  
+                "Always judge a font choice.",
+                "Be Bold or Italic. Never Regular.",
+            ];
+            const quoteElement = document.getElementById('designQuote');
+            quoteElement.addEventListener('click', () => {
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                quoteElement.textContent = randomQuote;
+                quoteElement.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    quoteElement.style.transform = 'scale(1)';
+                }, 300);
+            });
+
+            // Shape morph animation
+            const shapeMorph = document.querySelector('.shape-morph');
+            const shapes = [
+                { borderRadius: '0%', width: '80px', height: '80px' },
+                { borderRadius: '50%', width: '80px', height: '80px' },
+                { borderRadius: '0%', width: '120px', height: '40px' },
+                { borderRadius: '50%', width: '80px', height: '80px' },
+                { borderRadius: '0%', width: '70px', height: '70px' },
+                { borderRadius: '50% 50% 0 0', width: '80px', height: '40px' },
+                { borderRadius: '10px', width: '80px', height: '80px' },
+                { borderRadius: '50%', width: '60px', height: '60px' },
+            ];
+            let currentShapeIndex = 0;
+
+            shapeMorph.addEventListener('mouseenter', () => {
+                currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
+                const newShape = shapes[currentShapeIndex];
+                Object.assign(shapeMorph.style, newShape);
+            });
+
+            // Dynamic project loading
+            const projectsData = [
+                { title: "Project Eclipse", description: "This project was about making a packaging which went fit with the font I created.", image: "project 1.png" },
+                { title: "Project Mystery Man", description: "A Photo Narrative about a passenger vanishing amidst the rumbles of the local train.", image: "project 2.png" },
+                { title: "Project GTR to India", description: "A campaign about the launch of the Nissan GTR R35 in India.", image: "project 3.png" }
+            ];
+
+            const projectsContainer = document.getElementById('projects-container');
+
+            projectsData.forEach(project => {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'col-md-4 mb-4 fade-in';
+                projectElement.innerHTML = `
+                    <div class="project-container interactive-element">
+                        <img src="${project.image}" alt="${project.title}" class="project-image">
+                        <div class="project-description">
+                            <p>${project.description}</p>
+                        </div>
+                    </div>
+                    <h3>${project.title}</h3>
+                `;
+                projectsContainer.appendChild(projectElement);
+                observer.observe(projectElement);
+            });
+
+            // Social media links
+            const socialLinks = {
+                instagram: 'https://www.instagram.com/max.0.you.now/',
+                linkedin: 'https://www.linkedin.com/in/shraman-roy-52220b255/',
+                behance: 'https://www.behance.net/max0younow',
+                youtube: 'https://www.youtube.com/@max0younow375'
+            };
+
+            Object.keys(socialLinks).forEach(platform => {
+                const link = document.getElementById(`${platform}-link`);
+                if (link) {
+                    link.href = socialLinks[platform];
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
